@@ -27,13 +27,14 @@ void loop()
   Serial.print(sensors.getTempCByIndex(0));
   Serial.print(" C°\n");
 
-  if (sensors.getTempCByIndex(0) >= 45)
+  if (sensors.getTempCByIndex(0) >= 27)
   {
     digitalWrite(led, HIGH);
-    Serial.println(">>> Alta temperatura");
+    Serial.println(">>> ALTA temperatura");
   }
   else
   {
     digitalWrite(led, LOW);
+    Serial.println(">>> BAJA temperatura");
   }
 }

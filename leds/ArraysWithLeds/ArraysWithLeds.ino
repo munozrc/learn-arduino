@@ -1,5 +1,5 @@
 
-uint8_t LEDS_PIN[6] = {D0, D1, D2, D3, D4, D5};
+uint8_t LEDS_PIN[] = {D0, D1, D2, D3, D4, D5};
 uint8_t size = sizeof(LEDS_PIN) / sizeof(LEDS_PIN[0]);
 
 void setup()

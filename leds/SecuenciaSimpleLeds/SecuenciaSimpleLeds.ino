@@ -21,6 +21,9 @@ void loop()
     debemos usar el ciclo for el cual recorre de forma acedente todos los pines
     del arreglo. Despues de cada ciclo aumentamos el valor
     de posicion.
+
+    NOTA: La condicion que debe cumplir el ciclo para que no termine es que la
+    variable posicion sea menor al tamaño del arreglo.
   */
   for (uint8_t posicion = 0; posicion < tamaño; posicion++)
   {
@@ -28,24 +31,21 @@ void loop()
     digitalWrite(arregloDePines[posicion], HIGH);
     // Establecemos un tiempo de esperan antes que pase a la siguiente instrucción
     delay(500);
-
-    /*
-      El ciclo finalizar cuando haya encendidos todos los leds, esto
-      se dermina cuando el valor de posicion se a igual al tamaño del arreglo.
-    */
   }
 
   /*
     Despues del enceder todos los leds debemos apagarlos de forma desendente, para lograrlo
     debemos recorrer el arreglo de pines de atras hacia a adelante, lo haremos definiendo como valor
-    inicial de posicion el tamaño del arreglo, que sera de 6. para determinar cuando debe terminar
-    el ciclo comparamos el valor de posicion es mayor a cero, despues de cada ciclo decrementamos el valor
-    de posicion.
+    inicial de posicion el tamaño del arreglo, que sera de 6, despues de cada ciclo decrementamos el valor
+    de posicion asi pasara de 5 a 4, de 3 a 2... hasta llegar a 1
+
+    NOTA: La condicion que debe cumplir el ciclo para que no termine es que la
+    variable posicion sea mayor a cero.
   */
   for (uint8_t posicion = tamaño; posicion > 0; posicion--)
   {
     // Apagamos el led enviado una señal de LOW al pin
-    // NOTA: para acceder a elemento de la posicion usamos posicion - 1, porque
+    // NOTA: para acceder a un elemento del array por ciclo usamos "posicion - 1", porque
     // en el arreglo no existe la posicion 6, ya que se cuenta desde la posicion 0 a 5
     // dando como resultado 6 elementos.
     digitalWrite(arregloDePines[posicion - 1], LOW);

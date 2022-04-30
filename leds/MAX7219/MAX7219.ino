@@ -1,8 +1,8 @@
+#include <LedControl.h>
+
 #define DIN D5
 #define CS D6
 #define CLK D7
-
-#include <LedControl.h>
 
 LedControl matrix = LedControl(DIN, CLK, CS, 0);
 

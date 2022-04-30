@@ -1,17 +1,19 @@
-struct Pin
-{
-  static const short joystrickX = A0;
-};
+#define PinJoystickX A0
+#define PinJoystickY A1
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(9600);
 }
 
 void loop()
 {
-  int value = analogRead(Pin::joystrickX);
+  int x = analogRead(PinJoystickX);
+  int y = analogRead(PinJoystickY);
 
-  Serial.print("value = ");
-  Serial.println(value);
+  Serial.print("x = ");
+  Serial.print(x);
+
+  Serial.print(" y = ");
+  Serial.println(y);
 }

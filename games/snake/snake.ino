@@ -15,22 +15,53 @@ struct Coordinate
   Coordinate(int x = 0, int y = 0) : x(x), y(y) {}
 };
 
+LedControl ledControl(Pin::DIN, Pin::CLK, Pin::CS, 0);
 Coordinate joystickOrigin(500, 500);
-LedControl matrix(Pin::DIN, Pin::CLK, Pin::CS, 1);
+Coordinate playerPosition(0, 0);
+
+unsigned int speed = 100;
+unsigned long timestamp = 0;
 
 void setup()
 {
   Serial.begin(9600);
+
   joystickOrigin = calibrateAxis(Pin::JoystickX, Pin::JoystickY);
   Serial.println("Nueva calibracion --> x = " + String(joystickOrigin.x, DEC) + " y = " + String(joystickOrigin.y, DEC));
+
+  ledControl.shutdown(0, false);
+  ledControl.setIntensity(0, 8);
+  ledControl.clearDisplay(0);
 }
 
 void loop()
 {
-  int x = getAxisValue(Pin::JoystickX, joystickOrigin.x, 160);
-  int y = getAxisValue(Pin::JoystickY, joystickOrigin.y, 160);
+  ledControl.clearDisplay(0);
 
-  Serial.println("x = " + String(x, DEC) + " y = " + String(y, DEC));
+  int directionX = getAxisValue(Pin::JoystickX, joystickOrigin.x, 160);
+  int directionY = getAxisValue(Pin::JoystickY, joystickOrigin.y, 160);
+
+  Serial.println("x = " + String(directionX, DEC) + " y = " + String(directionY, DEC));
+
+  if (millis() > timestamp + speed)
+  {
+    timestamp = millis();
+
+    int posX = playerPosition.x + directionX;
+    int posY = playerPosition.y + directionY;
+
+    if (posX <= 7 && posX >= 0)
+    {
+      playerPosition.x += directionX;
+    }
+
+    if (posY <= 7 && posY >= 0)
+    {
+      playerPosition.y += directionY;
+    }
+  }
+
+  ledControl.setLed(0, playerPosition.x, playerPosition.y, 1);
 }
 
 int getAxisValue(uint8_t pin, int originAxis, int axisThreshold)

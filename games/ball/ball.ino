@@ -62,9 +62,9 @@ void loop()
   {
     for (int column = 0; column < 8; column++)
     {
-      if (board[row][column] == true)
+      if (board[row][column] == 1)
       {
-        ledControl.setLed(0, row, column, true);
+        ledControl.setLed(0, row, column, board[row][column]);
       }
     }
   }

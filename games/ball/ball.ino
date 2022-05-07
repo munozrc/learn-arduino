@@ -17,20 +17,21 @@ struct Coordinate
 LedControl ledControl(Pin::DIN, Pin::CLK, Pin::CS, 0);
 
 Coordinate joystickOrigin(500, 500);
-Coordinate playerPosition(3, 3);
+Coordinate playerPosition(3, 0);
 
-unsigned int speed = 100;
+int playerSize = 3;
+int speed = 100;
 unsigned long timestamp = 0;
 
 bool board[8][8] = {
-    {1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1}};
+    {0, 0, 0, 0, 1, 1, 1, 1},
+    {0, 0, 0, 0, 1, 1, 1, 1},
+    {0, 0, 0, 0, 1, 1, 1, 1},
+    {0, 0, 0, 0, 1, 1, 1, 1},
+    {0, 0, 0, 0, 1, 1, 1, 1},
+    {0, 0, 0, 0, 1, 1, 1, 1},
+    {0, 0, 0, 0, 1, 1, 1, 1},
+    {0, 0, 0, 0, 1, 1, 1, 1}};
 
 void setup()
 {
@@ -50,11 +51,19 @@ void loop()
 
     int posX = playerPosition.x + directionX;
 
-    if (posX <= 7 && posX >= 0 && board[posX][playerPosition.y] == false)
+    if (posX + playerSize - 1 <= 7 && posX >= 0)
     {
-      ledControl.setLed(0, playerPosition.x, playerPosition.y, false);
-      playerPosition.x += directionX;
-      ledControl.setLed(0, playerPosition.x, playerPosition.y, true);
+      for (int i = 0; i < playerSize; i++)
+      {
+        ledControl.setLed(0, playerPosition.x + i, playerPosition.y, false);
+      }
+
+      playerPosition.x = posX;
+
+      for (int i = 0; i < playerSize; i++)
+      {
+        ledControl.setLed(0, playerPosition.x + i, playerPosition.y, true);
+      }
     }
   }
 
